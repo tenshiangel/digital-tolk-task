@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Translation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GetTranslationRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class GetTranslationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'key' => 'sometimes|string',
-            'locale' => 'sometimes|string',
-            'value' => 'sometimes|string',
+            'key' => 'required|string|unique:translations,key,NULL,id,locale,' . $this->locale,
+            'locale' => 'required|string',
+            'value' => 'required|string',
             'tags' => 'sometimes|array',
             'tags.*' => 'string',
         ];
